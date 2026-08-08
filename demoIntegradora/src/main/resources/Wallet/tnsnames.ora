@@ -1,0 +1,12 @@
+bdwikivideojuegos_high = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-phoenix-1.oraclecloud.com))(connect_data=(service_name=gb717bcb018b51d_bdwikivideojuegos_high.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bdwikivideojuegos_medium = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-phoenix-1.oraclecloud.com))(connect_data=(service_name=gb717bcb018b51d_bdwikivideojuegos_medium.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bdwikivideojuegos_low = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-phoenix-1.oraclecloud.com))(connect_data=(service_name=gb717bcb018b51d_bdwikivideojuegos_low.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bdwikivideojuegos_tp = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-phoenix-1.oraclecloud.com))(connect_data=(service_name=gb717bcb018b51d_bdwikivideojuegos_tp.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+bdwikivideojuegos_tpurgent = (description= (retry_count=20)(retry_delay=3)(address=(protocol=tcps)(port=1522)(host=adb.us-phoenix-1.oraclecloud.com))(connect_data=(service_name=gb717bcb018b51d_bdwikivideojuegos_tpurgent.adb.oraclecloud.com))(security=(ssl_server_dn_match=yes)))
+
+
+

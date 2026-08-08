@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee
+                              https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"
+         version="6.1">
+
+    <display-name>Wiki de Videojuegos</display-name>
+
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+
+
+    <!-- Requerimiento 2.1: solo Editor/Administrador pueden crear/editar artículos.
+         RoleFilter solo actúa sobre POST, así que GET /articulo (ver detalle,
+         público) no pasa por esta restricción; ver RoleFilter.java. -->
+    <filter>
+        <filter-name>RoleFilterArticulo</filter-name>
+        <filter-class>com.demo.demo_integradora.controller.filter.RoleFilter</filter-class>
+        <init-param>
+            <param-name>rolesPermitidos</param-name>
+            <param-value>EDITOR,ADMINISTRADOR</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleFilterArticulo</filter-name>
+        <url-pattern>/articulo</url-pattern>
+    </filter-mapping>
+
+    <!-- Requerimiento 2.3: solo Administrador puede revertir versiones.
+         GET /historial (ver el historial, público) no pasa por esta restricción. -->
+    <filter>
+        <filter-name>RoleFilterHistorial</filter-name>
+        <filter-class>com.demo.demo_integradora.controller.filter.RoleFilter</filter-class>
+        <init-param>
+            <param-name>rolesPermitidos</param-name>
+            <param-value>ADMINISTRADOR</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>RoleFilterHistorial</filter-name>
+        <url-pattern>/historial</url-pattern>
+    </filter-mapping>
+
+</web-app>
