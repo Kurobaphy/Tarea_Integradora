@@ -1,0 +1,347 @@
+/* ============================================================
+   TEMA "WIKI" — Wiki de Videojuegos
+   ------------------------------------------------------------
+   Adaptación del diseño de preview-v7.html a las vistas JSP
+   existentes. Igual que el tema anterior, todo el look sale de
+   este único archivo: los .jsp casi no tuvieron que cambiar,
+   solo se reutilizan las mismas clases (.ds-header, .ds-container,
+   .ds-btn, <section>, <table>...) con un aspecto nuevo, más un
+   puñado de clases nuevas (.card, .grid-3, .hero-card...) para
+   las vistas que se reorganizaron como tarjetas.
+
+   Para personalizar el color principal, edita las variables de
+   la sección 1) — se usan en todo el archivo.
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+/* ---------- 1) PALETA DE COLORES ---------- */
+:root {
+    --bg:         #f4f5f7;
+    --card:       #ffffff;
+    --border:     #e7e8ec;
+    --text:       #17181c;
+    --text-dim:   #8a8d97;
+    --green:      #1c9c6b;
+    --green-bg:   #e6f6ef;
+    --red:        #d94f4f;
+    --red-bg:     #fdecec;
+    --ink:        #111214;
+    --radius:     16px;
+    --radius-sm:  10px;
+}
+
+/* ---------- 2) BASE ---------- */
+* { box-sizing: border-box; }
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+}
+
+::selection { background: var(--ink); color: #fff; }
+
+::-webkit-scrollbar { width: 12px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: #d3d5db; border: 3px solid var(--bg); border-radius: 8px; }
+::-webkit-scrollbar-thumb:hover { background: #b7bac2; }
+
+/* ---------- 3) TIPOGRAFÍA ---------- */
+h1, h2, h3 {
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    font-weight: 600;
+    letter-spacing: normal;
+    text-transform: none;
+    text-shadow: none;
+}
+
+h1 {
+    text-align: center;
+    font-size: 1.5rem;
+    margin: 1.2rem 0 1.1rem;
+    animation: none;
+}
+h1::after { content: none; }
+
+h2 { font-size: 1.02rem; border-left: none; padding-left: 0; margin: 0 0 12px; }
+
+strong { color: var(--text); font-weight: 600; }
+small  { color: var(--text-dim); }
+
+hr { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+/* ---------- 4) ENLACES ---------- */
+a { color: var(--text); text-decoration: none; transition: color .15s ease; }
+a:hover { color: var(--ink); text-decoration: underline; }
+
+/* ---------- 5) CABECERA (header.jsp — mismas clases, look nuevo) ---------- */
+.ds-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    padding: 14px 28px;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    box-shadow: none;
+}
+
+.ds-logo {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+    font-size: .95rem;
+    letter-spacing: normal;
+    text-transform: none;
+    color: var(--text) !important;
+    text-shadow: none;
+}
+.ds-logo:hover { text-decoration: none; }
+
+.ds-nav {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+    font-size: .85rem;
+}
+.ds-nav a { padding: 8px 12px; border-radius: 9px; color: var(--text-dim); font-weight: 500; }
+.ds-nav a:hover { background: var(--bg); color: var(--text); text-decoration: none; }
+
+.ds-saludo { color: var(--text-dim); font-style: normal; font-size: .83rem; padding: 0 4px; }
+
+/* ---------- 6) BOTONES ---------- */
+button,
+input[type="submit"],
+.ds-btn {
+    display: inline-block;
+    font-family: 'Inter', sans-serif;
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: normal;
+    text-transform: none;
+    color: #fff;
+    background: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 9px;
+    padding: 9px 16px;
+    cursor: pointer;
+    text-decoration: none;
+    transition: opacity .15s ease, background .15s ease;
+}
+
+button:hover,
+input[type="submit"]:hover,
+.ds-btn:hover {
+    opacity: .88;
+    box-shadow: none;
+    transform: none;
+    text-decoration: none;
+    background: var(--ink);
+}
+button:active, .ds-btn:active { transform: none; }
+
+/* nav links que ya son "botón" (clase existente en header.jsp) van outline */
+.ds-nav .ds-btn {
+    color: var(--text);
+    background: var(--card);
+    border: 1px solid var(--border);
+    padding: 8px 14px;
+}
+.ds-nav .ds-btn:hover { background: var(--bg); }
+
+.ds-btn-nuevo { color: #fff; background: var(--ink); border-color: var(--ink); }
+.ds-btn-nuevo:hover { opacity: .88; }
+
+/* Botones "peligrosos" (eliminar / revertir / cerrar sesión) en rojo,
+   igual que antes: se detectan solos por el confirm() que ya traían. */
+.ds-btn-salir,
+button[onclick*="confirm"] {
+    color: var(--red);
+    background: var(--red-bg);
+    border-color: #f3cccc;
+}
+.ds-btn-salir:hover,
+button[onclick*="confirm"]:hover {
+    opacity: 1;
+    background: #fbdcdc;
+}
+
+/* ---------- 7) FORMULARIOS ---------- */
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="date"],
+select,
+textarea {
+    font-family: 'Inter', sans-serif;
+    font-size: .88rem;
+    color: var(--text);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    margin: 4px 0 10px;
+    width: 100%;
+    max-width: 420px;
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: 2px solid #dfe1e6;
+    border-color: #c7c9d1;
+}
+
+label { color: var(--text-dim); font-size: .82rem; }
+form  { margin-top: 10px; }
+
+/* ---------- 8) CONTENEDOR PRINCIPAL (misma clase, ancho nuevo) ---------- */
+.ds-container {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 26px 28px 60px;
+}
+
+/* ---------- 9) TARJETAS — <section> (detalle.jsp) y .card (nuevas vistas) ---------- */
+section,
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    margin: 0 0 16px;
+    box-shadow: 0 1px 2px rgba(16,17,20,.04);
+}
+section:last-child, .card:last-child { margin-bottom: 0; }
+
+.section-title { font-size: 1.02rem; margin: 0 0 12px; }
+.desc { color: var(--text); line-height: 1.7; font-size: .92rem; }
+
+/* ---------- 10) GRIDS (hero + tarjetas de datos) ---------- */
+.grid-3 { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 16px; margin-bottom: 16px; align-items: stretch; }
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+@media (max-width: 760px) {
+    .grid-3, .grid-2 { grid-template-columns: 1fr; }
+}
+.grid-3 > *, .grid-2 > * { margin-bottom: 0; }
+
+.hero-card { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
+.hero-card .crumb { font-size: .76rem; color: var(--text-dim); margin-bottom: 4px; }
+.hero-card h1 { text-align: left; font-size: 1.4rem; margin: 0; }
+.hero-card .actions { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+.actions a {
+    font-size: .8rem;
+    font-weight: 600;
+    padding: 8px 14px;
+    border-radius: 9px;
+    border: 1px solid var(--border);
+    background: var(--card);
+    color: var(--text);
+}
+.actions a:hover { background: var(--bg); text-decoration: none; }
+
+.score-badge {
+    width: 56px; height: 56px; border-radius: 14px; background: var(--bg);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.score-badge b { font-size: 1.1rem; }
+.score-badge span { font-size: .6rem; color: var(--text-dim); }
+
+.stat-card .k { font-size: .78rem; color: var(--text-dim); margin-bottom: 6px; }
+.stat-card .v { font-size: 1.15rem; font-weight: 700; }
+
+/* ---------- 11) ETIQUETAS (chips) ---------- */
+.tags { display: flex; flex-wrap: wrap; gap: 8px; }
+.tag-chip {
+    font-size: .78rem; font-weight: 500; color: var(--text-dim);
+    background: var(--bg); border: 1px solid var(--border);
+    border-radius: 999px; padding: 6px 12px;
+}
+.tag-chip:hover { background: #ececef; color: var(--text); text-decoration: none; }
+
+/* ---------- 12) COMENTARIOS ---------- */
+.comment { display: flex; gap: 10px; padding: 12px 0; border-bottom: 1px solid var(--border); }
+.comment:last-of-type { border-bottom: none; }
+.comment .av { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg,#c7c9f5,#f5c7d6); flex-shrink: 0; }
+.comment .who { font-weight: 600; font-size: .86rem; }
+.comment .when { color: var(--text-dim); font-weight: 400; font-size: .76rem; margin-left: 6px; }
+.comment p { margin: 3px 0 0; font-size: .86rem; }
+
+/* ---------- 13) LISTAS (resultados, favoritos, sugerencias) ---------- */
+ul { list-style: none; padding: 0; margin: 0; }
+
+.ds-container > ul li,
+.results li,
+#listaSugerencias li {
+    display: flex; align-items: center; justify-content: space-between; gap: 10px;
+    padding: 12px 4px; border-bottom: 1px solid var(--border);
+    background: transparent; border-left: none; border-radius: 0; margin-bottom: 0;
+    transition: background .15s ease;
+}
+.ds-container > ul li:last-child,
+.results li:last-child,
+#listaSugerencias li:last-child { border-bottom: none; }
+
+.ds-container > ul li:hover,
+.results li:hover,
+#listaSugerencias li:hover { background: var(--bg); }
+
+.results .genre, .genre { color: var(--text-dim); font-size: .78rem; white-space: nowrap; }
+
+/* Listas dentro de una tarjeta <section>/<card> (ficha técnica, etc.) van simples */
+section ul li, .card ul li { padding: 4px 0; border: none; background: transparent; }
+
+/* ---------- 14) TABLAS (historial.jsp) ---------- */
+table { width: 100%; border-collapse: collapse; font-size: .85rem; background: transparent; border: none; }
+th { text-align: left; color: var(--text-dim); font-weight: 600; font-size: .74rem; padding: 8px 6px; border: none; border-bottom: 1px solid var(--border); background: transparent; text-transform: none; letter-spacing: normal; }
+td { padding: 10px 6px; border: none; border-bottom: 1px solid var(--border); }
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: var(--bg); }
+
+/* ---------- 15) MENSAJES (los .jsp ya traen style="color:red/green") ---------- */
+p[style*="color:red"] {
+    color: var(--red) !important;
+    border-left: 3px solid var(--red);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    background: var(--red-bg);
+    font-size: .86rem;
+}
+
+p[style*="color:green"] {
+    color: var(--green) !important;
+    border-left: 3px solid var(--green);
+    border-radius: var(--radius-sm);
+    padding: 10px 12px;
+    background: var(--green-bg);
+    font-size: .86rem;
+}
+
+/* ---------- 16) TARJETAS DE AUTENTICACIÓN (login, registro, recuperar...) ---------- */
+.auth-card { max-width: 420px; margin: 20px auto 0; }
+.auth-card form { margin-top: 4px; }
+.auth-card input[type="text"],
+.auth-card input[type="email"],
+.auth-card input[type="password"],
+.auth-card select,
+.auth-card textarea { max-width: 100%; }
+.auth-card button, .auth-card input[type="submit"] { width: 100%; margin-top: 4px; }
+.auth-card p { font-size: .84rem; color: var(--text-dim); }
+
+/* ---------- 17) PIE DE PÁGINA (footer.jsp — misma clase) ---------- */
+.ds-footer {
+    text-align: center;
+    padding: 24px;
+    margin-top: 40px;
+    border-top: 1px solid var(--border);
+    color: var(--text-dim);
+    font-family: 'Inter', sans-serif;
+    font-size: .8rem;
+    letter-spacing: normal;
+}
